@@ -20,7 +20,6 @@ The pipeline covers:
 To run this pipeline, you will need to install:
 
 - [Anaconda](https://docs.anaconda.com/free/anaconda/install/index.html)
-- [Development Tools](https://docs.flyte.org/en/latest/getting_started_with_workflow_development/installing_development_tools.html)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Flytectl](https://docs.flyte.org/projects/flytectl/en/latest/)
 
