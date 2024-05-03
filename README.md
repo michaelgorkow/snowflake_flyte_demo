@@ -105,6 +105,9 @@ pyflyte run --remote -p snowflake-demo -d development snowflake-demo/workflows/s
 
 ## What did you develop?
 You successfully built a full ML pipeline in Snowflake that is orchestrated by Flyte.  
+<img src="assets/flyte_pipeline.png" alt="flyte-db" height="60%" width="60%" align="top"/>  
+
+
 When you login to your Snowflake Account, you should see a new database called ```FLYTE_DEMO_DB```:  
 <img src="assets/snowflake_db_view.png" alt="flyte-db" height="40%" width="40%" align="top"/>  
 
