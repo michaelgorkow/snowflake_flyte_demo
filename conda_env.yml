@@ -1,0 +1,7 @@
+name: snowflake-flyte-demo
+dependencies:
+  - python=3.10
+  - flytekit
+  - pip:
+    - flytekit
+    - flytekitplugins-envd
