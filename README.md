@@ -113,4 +113,4 @@ This database contains the artificial training data set called ```ECOMMERCE_DATA
 It also contains the prepared train and test datasets as well as the ML model.
 
 Every time you run ```training_only_pipeline``` you will create a new version of the ML model:  
-<img src="assets/snowflake_model_versions.png" alt="model-view" height="40%" width="40%" align="top"/>
+<img src="assets/snowflake_model_versions.png" alt="model-view" height="60%" width="60%" align="top"/>
