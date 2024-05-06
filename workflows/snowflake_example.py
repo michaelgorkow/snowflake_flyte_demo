@@ -31,7 +31,7 @@ import numpy as np
 snowpark_image_spec = ImageSpec(
     base_image="ghcr.io/flyteorg/flytekit:py3.10-latest",
     packages=["snowflake-ml-python==1.3.0", "snowflake-snowpark-python[pandas]==1.14.0","scikit-learn==1.3.0","xgboost==1.7.3","snowflake==0.5.1"],
-    python_version="3.11",
+    python_version="3.10",
     env={"Debug": "True"},
     registry="localhost:30000", 
 )
@@ -228,6 +228,7 @@ def train_model() -> str:
     session = connect_to_snowflake(S_SF_ACCOUNT, S_SF_USER, S_SF_PASSWORD, SF_ROLE, SF_DATABASE, SF_SCHEMA, SF_WAREHOUSE)
     reg = Registry(session=session, database_name=SF_DATABASE, schema_name=SF_SCHEMA)
     df = session.table('ECOMMERCE_DATA_TRAIN_PREPARED')
+    df_test = session.table('ECOMMERCE_DATA_TEST_PREPARED')
     feature_cols = [
         'GENDER_OHE_FEMALE',
         'GENDER_OHE_MALE',
@@ -257,6 +258,10 @@ def train_model() -> str:
     # Train
     grid_search.fit(df)
 
+    # Evaluate
+    result = grid_search.predict(df_test)
+    mape = mean_absolute_percentage_error(df=result, y_true_col_names="YEARLY_SPENT", y_pred_col_names="YEARLY_SPENT_PREDICTION")
+
     # Get latest model versiont
     try:
         model_versions = reg.get_model("ECOMMERCE_SPENT_MODEL").show_versions()
@@ -272,6 +277,7 @@ def train_model() -> str:
         grid_search,
         model_name="ECOMMERCE_SPENT_MODEL",
         version_name=new_version,
+        metrics={"mean_abs_pct_err": mape},
         comment="Model trained using GridsearchCV in Snowpark to predict customer's yearly spending.",
         sample_input_data=df.select(feature_cols).limit(100)
     )
